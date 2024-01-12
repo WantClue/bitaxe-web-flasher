@@ -40,3 +40,7 @@ Keep your Bitaxe device on the cutting edge with our Bitaxe Web Flasher: [Flash 
 ---
 
 We are excited to see how the Bitaxe community grows and evolves with these tools at your disposal. Happy flashing!
+
+### To-Do
+
+- [ ] Adding GitHub Action to automate a new release download
