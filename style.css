@@ -36,3 +36,23 @@ button:hover {
   font-style: italic;
   margin-top: 20px;
 }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #121212;
+}
+
+footer a {
+  color: #333;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+footer a:hover {
+  color: #0366d6;
+}
+
+.fa-github {
+  margin-right: 8px;
+}
