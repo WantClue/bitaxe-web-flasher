@@ -43,4 +43,5 @@ We are excited to see how the Bitaxe community grows and evolves with these tool
 
 ### To-Do
 
-- [ ] Adding GitHub Action to automate a new release download
+- [x] Adding GitHub Action to automate a new release download
+- [ ] Fancy UI
