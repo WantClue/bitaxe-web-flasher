@@ -32,6 +32,6 @@ jobs:
         git config --local user.name "GitHub Action"
         git add firmware/bitaxe-os-latest.bin
         git commit -m "Update firmware binary to ${{ steps.get-release.outputs.tag_name }}"
-        git push --set-upstream origin HEAD:main
+        git push --set-upstream origin HEAD:master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
