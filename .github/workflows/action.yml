@@ -1,0 +1,34 @@
+name: Download Firmware
+
+on:
+  schedule:
+    - cron:  '0 0 * * *' # Runs every day at midnight
+  # You can also trigger this workflow manually or on other events
+
+jobs:
+  download-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Get Latest Release
+      id: get-release
+      run: |
+        LATEST_RELEASE=$(curl -s https://api.github.com/repos/skot/ESP-Miner/releases/latest)
+        RELEASE_TAG=$(echo $LATEST_RELEASE | jq -r .tag_name)
+        echo "::set-output name=tag_name::$RELEASE_TAG"
+
+    - name: Download Specific Binary File
+      run: |
+        FILE_URL=$(curl -s https://api.github.com/repos/skot/ESP-Miner/releases/latest | jq -r '.assets[] | select(.name | startswith("esp-miner-factory-204-")) | .browser_download_url')
+        wget -O firmware/bitaxe-os-latest.bin $FILE_URL
+
+    - name: Commit and Push
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add firmware/bitaxe-os-latest.bin
+        git commit -m "Update firmware binary to ${{ steps.get-release.outputs.tag_name }}"
+        git push
