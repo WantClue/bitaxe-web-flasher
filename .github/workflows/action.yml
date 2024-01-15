@@ -4,7 +4,8 @@ on:
   schedule:
     - cron:  '0 0 * * *' # Runs every day at midnight
   # You can also trigger this workflow manually or on other events
-
+  workflow_dispatch:
+  
 jobs:
   download-and-commit:
     runs-on: ubuntu-latest
