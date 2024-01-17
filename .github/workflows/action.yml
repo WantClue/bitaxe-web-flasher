@@ -26,7 +26,13 @@ jobs:
         FILE_URL=$(curl -s https://api.github.com/repos/skot/ESP-Miner/releases/latest | jq -r '.assets[] | select(.name | startswith("esp-miner-factory-204-")) | .browser_download_url')
         wget -O firmware/bitaxe-os-latest.bin $FILE_URL
 
+    - name: Check for Changes
+      id: check-changes
+      run: |
+        git diff --exit-code || echo "::set-output name=changes_detected::true"
+
     - name: Commit and Push
+      if: steps.check-changes.outputs.changes_detected == 'true'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
