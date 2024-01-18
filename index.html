@@ -1,55 +1,128 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+  <head>
+    <meta charset="utf-8" />
+    <title>Bitaxe Web Flasher</title>
+    <meta
+      name="description"
+      content="Easily allow users to install Bitaxe firmware on the web."
     />
-    <h1>Bitaxe Web Flasher</h1>
-
-    <div id="main" style="display: none">
-      <br />
-      <script
-        type="module"
-        src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js?module"
-      ></script>
-      <esp-web-install-button
-        id="installButton"
-        manifest="firmware/manifest.json"
-      ></esp-web-install-button>
-      <br />
-      <span
-        ><br />NOTE: Make sure to close anything using your devices com port
-        (e.g. Serial monitor) <br />
-        currently only the BM1366 version is supported</span
-      >
-    </div>
-    <div id="notSupported" style="display: none">
-      Your browser does not support the Web Serial API. Try Chrome or allow
-      Serial use
-    </div>
-
-    <script>
-      if (navigator.serial) {
-        document.getElementById("notSupported").style.display = "none";
-        document.getElementById("main").style.display = "block";
-      } else {
-        document.getElementById("notSupported").style.display = "block";
-        document.getElementById("main").style.display = "none";
+    <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="dark light" />
+    <style>
+      body {
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Ubuntu, sans-serif;
+        padding: 0;
+        margin: 0;
+        line-height: 1.4;
       }
+      .content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 12px;
+      }
+      h2 {
+        margin-top: 2em;
+      }
+      h3 {
+        margin-top: 1.5em;
+      }
+      a {
+        color: #03a9f4;
+      }
+      .invisible {
+        visibility: hidden;
+      }
+      .hidden {
+        display: none;
+      }
+      esp-web-install-button[install-unsupported] {
+        visibility: inherit;
+      }
+      .content pre {
+        max-width: 100%;
+        overflow-y: scroll;
+      }
+      .ko-fi {
+        text-align: center;
+      }
+      .footer {
+        margin-top: 24px;
+        border-top: 1px solid #ccc;
+        padding-top: 24px;
+        text-align: center;
+      }
+      .footer .initiative {
+        font-style: italic;
+        margin-top: 16px;
+      }
+      table {
+        border-spacing: 0;
+      }
+      td {
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+      }
+      .radios li {
+        list-style: none;
+        line-height: 2em;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #333;
+          color: #fff;
+        }
+        a {
+          color: #58a6ff;
+        }
+      }
+    </style>
+    <script type="module" src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js?module"></script>
+  </head>
+  <body>
+    <div class="content">
+      <h1>Bitaxe Web installer</h1>
+      <p>Select your Bitaxe-Model</p>
+      <ul class="radios">
+        <li>
+          <label><input type="radio" name="type" value="ultra" /> Bitaxe Ultra</label>
+        </li>
+        <li>
+          <label><input type="radio" name="type" value="max" /> Bitaxe Max</label>
+        </li>
+      </ul>
+      <p>NOTE: Make sure to close anything using your devices com port (e.g. Serial monitor)</p>
+      <p>Happy Flashing!</p>
+      <p class="button-row" align="center">
+        <esp-web-install-button class="invisible"></esp-web-install-button>
+      </p>
+
+      <div class="footer">
+        <a href="https://github.com/WantClue/bitaxe-web-flasher"
+          >Bitaxe-Web-Flasher</a
+        > &mdash;
+        Installer powered by <a href="https://esphome.github.io/esp-web-tools/">ESP Web Tools</a>.
+    </div>
+    <script>
+      document.querySelectorAll('input[name="type"]').forEach(radio =>
+        radio.addEventListener("change", () => {
+          const button = document.querySelector('esp-web-install-button');
+          button.manifest = `firmware/manifest_${radio.value}.json`;
+          button.classList.remove('invisible');
+        }
+      ));
     </script>
+    <br>
+    <div class="ko-fi">
+    <script
+      type="text/javascript"
+      src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"
+    ></script>
+    <script type="text/javascript">
+      kofiwidget2.init("Support Me on Ko-fi", "#29abe0", "R5R0IYN9V");
+      kofiwidget2.draw();
+    </script>
+    </div>
   </body>
-  <footer>
-    <a
-      href="https://github.com/WantClue/bitaxe-web-flasher"
-      target="_blank"
-      title="Visit my GitHub Repository"
-    >
-      <i class="fab fa-github"></i> View My GitHub
-    </a>
-    <br>
-    <br>
-    <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#29abe0', 'R5R0IYN9V');kofiwidget2.draw();</script> 
-  </footer>
 </html>
