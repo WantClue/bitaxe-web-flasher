@@ -29,7 +29,7 @@ If you'd like to contribute to the Bitaxe Web Flasher project, please feel free 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](/LICENSE) file for details.
+This project is licensed under the GPL License - see the [LICENSE.md](/LICENSE) file for details.
 
 ---
 
