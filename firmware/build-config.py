@@ -25,7 +25,7 @@ for version in board_versions:
     # Replace the boardversion value with each version
     modified_content = original_content.replace('boardversion,data,string,204', f'boardversion,data,string,{version}')
     # Store each modified content in a dict with the version as the key
-    config_files[f'config_{version}.csv'] = modified_content
+    config_files[f'config_{version}.cvs'] = modified_content
 
 for filename, content in config_files.items():
     # Open a new file in write mode with the filename
