@@ -1,0 +1,14 @@
+{
+  "name": "Bitaxe-Flasher",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "improv": false,
+      "parts": [
+        { "path": "www.bin", "offset": 4259840 },
+        { "path": "esp-miner.bin", "offset": 65536 }
+      ]
+    }
+  ]
+}
