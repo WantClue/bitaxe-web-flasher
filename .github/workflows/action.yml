@@ -31,6 +31,10 @@ jobs:
           WWW_BIN_URL=$(curl -s https://api.github.com/repos/skot/ESP-Miner/releases/latest | jq -r '.assets[] | select(.name == "www.bin") | .browser_download_url')
           wget -O firmware/www.bin $WWW_BIN_URL
 
+      - name: Update HTML with Version
+        run: |
+          sed -i 's|<label><input type="radio" name="type" value="update" /> All Bitaxe just update</label>|<label><input type="radio" name="type" value="update" /> All Bitaxe just update - Version ${{ steps.get-release.outputs.tag_name }}</label>|g' index.html
+
       - name: Check for Changes
         id: check-changes
         run: |
@@ -41,7 +45,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add firmware/esp-miner.bin firmware/www.bin
+          git add firmware/esp-miner.bin firmware/www.bin index.html
           git commit -m "Update firmware binaries to ${{ steps.get-release.outputs.tag_name }}"
           git push --set-upstream origin HEAD:master
         env:
