@@ -68,6 +68,17 @@
         list-style: none;
         line-height: 2em;
       }
+      /* Container styling */
+      .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      /* Image styling: shrink its size by 50% */
+      .image-container img {
+        width: 50%; 
+        height: auto; 
+      }
       @media (prefers-color-scheme: dark) {
         body {
           background-color: #333;
@@ -117,6 +128,10 @@
         }
       ));
     </script>
+    <br>
+    <div class="image-container">
+      <img src="https://getalby.com/p/wantclue.png" alt="Description of image">
+    </div>
     <br>
     <div class="ko-fi">
     <script
