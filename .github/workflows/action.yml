@@ -24,12 +24,20 @@ jobs:
       - name: Download ESP Miner Binary
         run: |
           ESP_MINER_URL=$(curl -s https://api.github.com/repos/skot/ESP-Miner/releases/latest | jq -r '.assets[] | select(.name == "esp-miner.bin") | .browser_download_url')
-          wget -O firmware/esp-miner.bin $ESP_MINER_URL
+          if [ -n "$ESP_MINER_URL" ]; then
+            wget -O firmware/esp-miner.bin $ESP_MINER_URL
+          else
+            echo "ESP Miner binary not found, skipping download."
+          fi
 
       - name: Download WWW Binary
         run: |
           WWW_BIN_URL=$(curl -s https://api.github.com/repos/skot/ESP-Miner/releases/latest | jq -r '.assets[] | select(.name == "www.bin") | .browser_download_url')
-          wget -O firmware/www.bin $WWW_BIN_URL
+          if [ -n "$WWW_BIN_URL" ]; then
+            wget -O firmware/www.bin $WWW_BIN_URL
+          else
+            echo "WWW binary not found, skipping download."
+          fi
 
       - name: Update HTML with Version
         run: |
