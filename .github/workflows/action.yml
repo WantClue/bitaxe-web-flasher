@@ -1,31 +1,33 @@
 name: Download Firmware
-
 on:
   schedule:
     - cron: "0 0 * * *" # Runs every day at midnight
-  # You can also trigger this workflow manually or on other events
   workflow_dispatch:
 
 jobs:
   download-and-commit:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Latest Release
         id: get-release
         run: |
           LATEST_RELEASE=$(curl -s https://api.github.com/repos/skot/ESP-Miner/releases/latest)
           RELEASE_TAG=$(echo $LATEST_RELEASE | jq -r .tag_name)
-          echo "::set-output name=tag_name::$RELEASE_TAG"
+          echo "tag_name=$RELEASE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Remove old binaries
+        run: |
+          rm -f firmware/esp-miner.bin
+          rm -f firmware/www.bin
 
       - name: Download ESP Miner Binary
         run: |
           ESP_MINER_URL=$(curl -s https://api.github.com/repos/skot/ESP-Miner/releases/latest | jq -r '.assets[] | select(.name == "esp-miner.bin") | .browser_download_url')
           if [ -n "$ESP_MINER_URL" ]; then
-            wget -O firmware/esp-miner.bin $ESP_MINER_URL
+            wget -O firmware/esp-miner.bin $ESP_MINER_URL || exit 1
           else
             echo "ESP Miner binary not found, skipping download."
           fi
@@ -34,7 +36,7 @@ jobs:
         run: |
           WWW_BIN_URL=$(curl -s https://api.github.com/repos/skot/ESP-Miner/releases/latest | jq -r '.assets[] | select(.name == "www.bin") | .browser_download_url')
           if [ -n "$WWW_BIN_URL" ]; then
-            wget -O firmware/www.bin $WWW_BIN_URL
+            wget -O firmware/www.bin $WWW_BIN_URL || exit 1
           else
             echo "WWW binary not found, skipping download."
           fi
@@ -46,7 +48,7 @@ jobs:
       - name: Check for Changes
         id: check-changes
         run: |
-          git diff --exit-code || echo "::set-output name=changes_detected::true"
+          git diff --exit-code || echo "changes_detected=true" >> $GITHUB_OUTPUT
 
       - name: Commit and Push
         if: steps.check-changes.outputs.changes_detected == 'true'
@@ -55,6 +57,6 @@ jobs:
           git config --local user.name "GitHub Action"
           git add firmware/esp-miner.bin firmware/www.bin index.html
           git commit -m "Update firmware binaries to ${{ steps.get-release.outputs.tag_name }}"
-          git push --set-upstream origin HEAD:master
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
