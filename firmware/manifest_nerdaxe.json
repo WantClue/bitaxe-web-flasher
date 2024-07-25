@@ -1,0 +1,11 @@
+{
+    "name": "Bitaxe-Flasher",
+    "builds": [
+      {
+        "chipFamily": "ESP32-S3",
+        "improv": false,
+        "parts": [{ "path": "esp-miner-factory-nerd101-v2.1.4.bin", "offset": 0 }]
+      }
+    ]
+  }
+  
