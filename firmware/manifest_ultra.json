@@ -4,7 +4,7 @@
     {
       "chipFamily": "ESP32-S3",
       "improv": false,
-      "parts": [{ "path": "bitaxe-os-latest.bin", "offset": 0 }]
+      "parts": [{ "path": "esp-miner-factory-204-v2.1.9.bin", "offset": 0 }]
     }
   ]
 }
