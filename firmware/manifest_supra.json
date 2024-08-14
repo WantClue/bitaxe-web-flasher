@@ -4,7 +4,7 @@
     {
       "chipFamily": "ESP32-S3",
       "improv": false,
-      "parts": [{ "path": "esp-miner-factory-401-v2.1.8.bin", "offset": 0 }]
+      "parts": [{ "path": "esp-miner-factory-401-v2.1.10.bin", "offset": 0 }]
     }
   ]
 }
