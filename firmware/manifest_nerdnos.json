@@ -1,0 +1,11 @@
+{
+    "name": "Bitaxe-Flasher",
+    "builds": [
+      {
+        "chipFamily": "ESP32-S3",
+        "improv": false,
+        "parts": [{ "path": "merged-flash.bin", "offset": 0 }]
+      }
+    ]
+  }
+  
