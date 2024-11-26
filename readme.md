@@ -1,4 +1,4 @@
-# This repo will be changed into Archive mode very soon. A newer version will be released very soon!!!
+# This repo is in Archive mode. Use the new one [here](https://bitaxeorg.github.io/bitaxe-web-flasher)
 
 
 
